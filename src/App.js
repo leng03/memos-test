@@ -13,7 +13,6 @@ function App() {
     const [count, setCount] = useState(0)
 
     function handleClick() {
-        console.log('clicked')
         setCount(count + 1)
     }
 
