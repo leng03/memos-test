@@ -11,13 +11,10 @@ import {App} from './App';
 
 // Is this a unit test? no, it is a units test
 test('should display the main app when logged in', () => {
-    render(<App loggedInInit={true}/>);
-    const h1 = screen.getByText(/This is the main App/)
+    const mock = ()=> <>This is the expected count</>
+    render(<App loggedInInit={true} _Counter={mock}/>);
+    const h1 = screen.getByText(/This is the expected count/)
     expect(h1).toBeInTheDocument()
-    const h2 = screen.getByText(/The count is 0/)
-    expect(h2).toBeInTheDocument()
-    const btn = screen.getByText(/Hello/)
-    expect(btn).toBeInTheDocument()
 });
 
 // This is a unit test now
