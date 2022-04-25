@@ -1,6 +1,7 @@
 // Responsible for displaying a memos
 
-export default function Memo({title, date, description, complete}) {
+export default function Memo({memo}) {
+    const {title, date, description, complete} = memo
     return <>
         <h2>{title}</h2>
         <h3>{date.toDateString()}</h3>

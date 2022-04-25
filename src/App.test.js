@@ -13,7 +13,7 @@ import {App} from './App';
 
 test('should display the main app when logged in', () => {
     const mock = ()=> <>This is the expected count</>
-    render(<App loggedInInit={true} _Counter={mock}/>);
+    render(<App loggedInInit={true} _Memos={mock}/>);
     const h1 = screen.getByText(/This is the expected count/)
     expect(h1).toBeInTheDocument()
 });
