@@ -10,6 +10,7 @@ import {App} from './App';
 // Ecma Script is a combination of JS and JSX
 
 // Is this a unit test? no, it is a units test
+
 test('should display the main app when logged in', () => {
     const mock = ()=> <>This is the expected count</>
     render(<App loggedInInit={true} _Counter={mock}/>);

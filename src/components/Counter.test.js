@@ -16,12 +16,15 @@ test("should start at 1", () => {
 })
 
 test("should increment on click",()=>{
-    let callCount =0
+    // let callCount =0
+    //
+    // function countCall(){
+    //     ++callCount
+    // }
+    const  mock = jest.fn()
 
-    function countCall(){
-        ++callCount
-    }
-    render(<Counter number={0} onIncrement={countCall}/>)
+    render(<Counter number={0} onIncrement={mock}/>)
     screen.getByRole("button").click()
-    expect(callCount).toBe(1)
+    // expect(callCount).toBe(1)
+    expect(mock).toHaveBeenCalled()
 })
