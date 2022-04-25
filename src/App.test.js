@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {App} from './App';
 
 // Up until now, we have done manual testing
@@ -11,21 +11,19 @@ import {App} from './App';
 
 // Is this a unit test? no, it is a units test
 test('should display the main app when logged in', () => {
-  render(<App loggedInInit={true}/>);
-  const h1 = screen.getByText(/This is the main App/)
-  expect(h1).toBeInTheDocument()
-  const h2 = screen.getByText(/The count is 0/)
-  expect(h2).toBeInTheDocument()
-  const btn = screen.getByText(/Hello/)
-  expect(btn).toBeInTheDocument()
+    render(<App loggedInInit={true}/>);
+    const h1 = screen.getByText(/This is the main App/)
+    expect(h1).toBeInTheDocument()
+    const h2 = screen.getByText(/The count is 0/)
+    expect(h2).toBeInTheDocument()
+    const btn = screen.getByText(/Hello/)
+    expect(btn).toBeInTheDocument()
 });
 
+// This is a unit test now
 test('should display the login screen when logged out', () => {
-  render(<App/>);
-  const usernameElement = screen.getByPlaceholderText(/Username/);
-  expect(usernameElement).toBeInTheDocument();
-  const passwordElement = screen.getByPlaceholderText(/Password/);
-  expect(passwordElement).toBeInTheDocument();
-  const loginButton = screen.getByText(/Login/);
-  expect(loginButton).toBeInTheDocument();
+    const mockLogin = () => <>This is the expected text</>
+    render(<App _Login={mockLogin}/>);
+    const element = screen.getByText(/This is the expected text/);
+    expect(element).toBeInTheDocument();
 });
