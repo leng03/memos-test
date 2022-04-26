@@ -1,7 +1,7 @@
 import {render, screen} from "@testing-library/react";
 import Memo from "./Memo";
 
-test("should show title, date, description, and complete", () => {
+test("should show title, date, description, and complete (badge should be grey)", () => {
     const title = "Test Title"
     const date = new Date()
     const description = "Test Description"
@@ -12,6 +12,8 @@ test("should show title, date, description, and complete", () => {
     expect(screen.getByText(description)).toBeInTheDocument()
     expect(screen.getByText("Complete")).toBeInTheDocument()
     expect(screen.getByText("Delete")).toBeInTheDocument()
+    const bg = screen.getByText("Complete");
+    expect(bg).toHaveClass("bg-success")
 })
 
 test("should show title, date, description, and not complete", () => {
@@ -30,4 +32,6 @@ test("should show title, date, description, and not complete", () => {
     expect(deleteButton).toBeInTheDocument()
     deleteButton.click()
     expect(deleteMock).toHaveBeenCalledWith(id)
+    const bg = screen.getByText("To Do");
+    expect(bg).toHaveClass("bg-secondary")
 })
