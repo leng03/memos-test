@@ -2,6 +2,7 @@
 //    properties that are passed into this
 //    component
 import {useState} from "react";
+import {Button, Card, Form, Row} from "react-bootstrap";
 
 function Login(properties) {
     const [username, setUsername] = useState('')
@@ -19,11 +20,26 @@ function Login(properties) {
         setPassword(event.target.value)
     }
 
-    return <>
-        <input type='text' placeholder='Username' onChange={onUsernameChange}/>
-        <input type='text' placeholder='Password' onChange={onPasswordChange}/>
-        <button onClick={sendCredentials}>Login</button>
-    </>
+    return <Card>
+        <Card.Header className={"text-center"}>
+            <h3>Login</h3>
+        </Card.Header>
+        <Card.Body>
+            <Form>
+                <Form.Group className={"m-2"}>
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type='text' placeholder='Username' onChange={onUsernameChange}/>
+                </Form.Group>
+                <Form.Group className={"m-2"}>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type='text' placeholder='Password' onChange={onPasswordChange}/>
+                </Form.Group>
+                <Row className={"p-3"}>
+                    <Button variant={"primary"} onClick={sendCredentials}>Submit</Button>
+                </Row>
+            </Form>
+        </Card.Body>
+    </Card>
 }
 
 export default Login

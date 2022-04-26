@@ -44,7 +44,7 @@ export function App({loggedInInit = false, _Login = Login, _Memos = Memos}) {
     // we need to rerender
 
     // Take some identifier and use that ID to delete the memo
-    function deleteMemo(memoID){
+    function deleteMemo(memoID) {
         const newMemos = memos.filter(memo => memo.id !== memoID)
         setMemos(newMemos)
     }
@@ -58,7 +58,9 @@ export function App({loggedInInit = false, _Login = Login, _Memos = Memos}) {
     if (isLoggedIn)
         return <_Memos memos={memos} onDelete={deleteMemo}/>
     else
-        return <_Login onLogin={handleLogin}/>
+        return <div className={"mt-3"}>
+            <_Login onLogin={handleLogin}/>
+        </div>
 }
 
 export default App;
