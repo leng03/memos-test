@@ -39,3 +39,13 @@ test('should display the login screen when logged out', () => {
     const element = screen.getByText(/This is the expected text/);
     expect(element).toBeInTheDocument();
 });
+
+it('should pass an onEdit function as a property to Memos', function () {
+    let _onEdit = undefined
+    const Memos = ({onEdit})=>{
+        _onEdit = onEdit
+    }
+
+    render(<App loggedInInit={true} _Memos={Memos}/>)
+    expect(typeof _onEdit).toBe("function")
+});

@@ -3,6 +3,7 @@ import {useState} from "react";
 import Login from "./components/Login";
 import Memos from "./components/Memos";
 import {Col, Row} from "react-bootstrap";
+import EditMemo from "./components/EditMemo";
 
 // All 'Functional React Components' are render functions
 // This function is called every time we want to render our
@@ -39,6 +40,7 @@ export function App({loggedInInit = false, _Login = Login, _Memos = Memos}) {
         {id: 2, title: "Title 3", date: new Date(), description: "Desc 3", complete: true}
     ])
     const [isLoggedIn, setIsLoggedIn] = useState(loggedInInit)
+    const [memoToEdit, setMemoToEdit] = useState(undefined)
 
     // In order to delete, we need to remove a specific
     // an element from our memos state
@@ -56,8 +58,30 @@ export function App({loggedInInit = false, _Login = Login, _Memos = Memos}) {
             setIsLoggedIn(true)
     }
 
-    if (isLoggedIn)
-        return <_Memos memos={memos} onDelete={deleteMemo}/>
+    function editMemo(memo){
+        setMemoToEdit(memo)
+    }
+
+    function cancelEditMemo(){
+        setMemoToEdit(undefined)
+    }
+
+    function applyEditMemo(memo){
+        const newMemos = memos.map( existing =>
+            existing.id === memo.id ? memo : existing)
+        setMemos(newMemos)
+        setMemoToEdit(undefined)
+    }
+
+    if (isLoggedIn) {
+        if (memoToEdit)
+            return <div>
+                <EditMemo memo={memoToEdit} onCancel={cancelEditMemo}
+                                  onApply={applyEditMemo}/>
+        </div>
+        else
+            return <_Memos memos={memos} onDelete={deleteMemo} onEdit={editMemo}/>
+    }
     else
         return <Row>
             {/*<Col style={{display: "flex", justifyContent: "center"}}>*/}

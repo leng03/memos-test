@@ -2,7 +2,7 @@
 
 import {Badge, Button, Card} from "react-bootstrap";
 
-export default function Memo({memo, onDelete}) {
+export default function Memo({memo, onDelete, onEdit}) {
     const {id, title, date, description, complete} = memo
     return <Card>
         <Card.Header>
@@ -22,6 +22,7 @@ export default function Memo({memo, onDelete}) {
                     {complete ? "Complete" : "To Do"}
                 </Badge>
                 <Button variant={"outline-danger"} onClick={() => onDelete(id)}>Delete</Button>
+                <Button variant={"outline-primary"} onClick={()=> onEdit(memo)}>Edit</Button>
             </div>
         </Card.Footer>
 

@@ -6,11 +6,12 @@ export default function EditMemo({memo, onCancel, onApply}){
     const {title, description, date, complete} = memo
     const [newTitle, setNewTitle] = useState(title)
     const [newDescription, setNewDescription] = useState(description)
-    const [newDate, setNewDate] = useState(date)
+    const [newDate, setNewDate] = useState(date.toISOString().substr(0,10))
     const [newComplete, setNewComplete] = useState(complete)
 
     function handleApply(){
         onApply({
+            id: memo.id,
             title: newTitle,
             description: newDescription,
             date: new Date(newDate),
