@@ -37,7 +37,7 @@ function Login(properties) {
                 </Form.Group>
                 <Form.Group className={"m-2"}>
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type='text' placeholder='Password' onChange={onPasswordChange}/>
+                    <Form.Control type='password' placeholder='Password' onChange={onPasswordChange}/>
                 </Form.Group>
                 <Row className={"p-3"}>
                     <Button type={"submit"} variant={"primary"}>Submit</Button>
