@@ -1,4 +1,4 @@
-import reducer, {ADD_MEMO, DELETE_MEMO, EDIT_MEMO, LOGIN, LOGOUT} from "./memos"
+import reducer, {ADD_MEMO, APPLY_EDIT_MEMO, CANCEL_MEMO, DELETE_MEMO, EDIT_MEMO, LOGIN, LOGOUT} from "./memos"
 
 it('should initialed with isLoggedIn false', function () {
     const state = reducer()
@@ -67,18 +67,37 @@ it('should remove a memo when DELETE_MEMO is performed', function () {
     ])
 });
 
-it('should update all fields of a memo when EDIT_MEMO is performed', function () {
+it('should start with memoToEdit being undefined', function () {
+    const state = reducer()
+    expect(state.memoToEdit).toBe(null)
+});
+
+it('should set memoToEdit when EDIT_MEMO is performed', function () {
+    const memo = "my memo"
+    const state = reducer(undefined, {type: EDIT_MEMO, memo})
+    expect(state.memoToEdit).toBe(memo)
+});
+
+it('should update all fields of a memo and set memoToEdit to null when APPLY_EDIT_MEMO is performed', function () {
     const currentState = reducer()
     currentState.memos = [
         {id: 0, title: "memo1"},
         {id: 1, title: "memo2"},
-        {id: 2, title:"memo3"},
+        {id: 2, title: "memo3"},
     ]
-    const newMemo = {id: 1, title:"new"}
-    const state = reducer(currentState, {type: EDIT_MEMO, memo: newMemo})
+    currentState.memoToEdit = {id: 1, title: "new"}
+    const state = reducer(currentState, {type: APPLY_EDIT_MEMO})
     expect(state.memos).toStrictEqual([
         {id: 0, title: "memo1"},
         {id: 1, title: "new"},
         {id: 2, title:"memo3"},
     ])
+    expect(state.memoToEdit).toBe(null)
+});
+
+it('should set memoToEdit to null when CANCEL_MEMO is performed', function () {
+    const currentState = reducer()
+    currentState.memoToEdit = "some value"
+    const state = reducer(undefined, {type: CANCEL_MEMO})
+    expect(state.memoToEdit).toBe(null)
 });
