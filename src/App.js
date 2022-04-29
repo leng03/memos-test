@@ -1,94 +1,56 @@
 import './App.css';
-import {useState} from "react";
 import Login from "./components/Login";
 import Memos from "./components/Memos";
 import {Col, Row} from "react-bootstrap";
 import EditMemo from "./components/EditMemo";
+import {useDispatch, useSelector} from "react-redux";
+import {APPLY_EDIT_MEMO, CANCEL_MEMO, DELETE_MEMO, EDIT_MEMO, LOGIN, LOGOUT} from "./modules/memos";
 
-// dux pattern
-
-// All 'Functional React Components' are render functions
-// This function is called every time we want to render our
-//    application
-// Each FRC must return a single tag/element
-
-// App handles the state, and state modification
-
-// 1. Allow a user to create, edit, and delete memos
-// 2. Each memo shall have:
-//      a. title
-//      b. date that it was created
-//      c. description (the actual memo)
-//      d. complete/ not-complete
-// 3. Authenticate the user (one user only)
 export function App({loggedInInit = false, _Login = Login, _Memos = Memos}) {
-    // Destructing
-    // const  obj = {
-    //     key1: "val1",
-    //     key2: "val2",
-    //     key3: "val3",
-    // }
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector(state => state.isLoggedIn)
+    const memos = useSelector(state => state.memos)
+    const memoToEdit = useSelector(state => state.memoToEdit)
 
-    // line A
-    // const {key1} = obj
-
-    // useState returns an array with 2 elements
-    // The first element is the current value
-    // The second element is a function that we can call
-    //    to update the value
-    const [memos, setMemos] = useState([
-        {id: 0, title: "Title 1", date: new Date(), description: "Desc 1", complete: false},
-        {id: 1, title: "Title 2", date: new Date(), description: "Desc 2", complete: true},
-        {id: 2, title: "Title 3", date: new Date(), description: "Desc 3", complete: true}
-    ])
-    const [isLoggedIn, setIsLoggedIn] = useState(loggedInInit)
-    const [memoToEdit, setMemoToEdit] = useState(undefined)
-
-    // In order to delete, we need to remove a specific
-    // an element from our memos state
-    // we need to rerender
-
-    // Take some identifier and use that ID to delete the memo
     function deleteMemo(memoID) {
-        const newMemos = memos.filter(memo => memo.id !== memoID)
-        setMemos(newMemos)
+        dispatch({type: DELETE_MEMO, id: memoID})
     }
 
     function handleLogin(credentials) {
-        if (credentials.username === 'leng' &&
-            credentials.password === 'pass')
-            setIsLoggedIn(true)
+        console.log(credentials)
+        dispatch({type: LOGIN, credentials})
     }
 
-    function editMemo(memo){
-        setMemoToEdit(memo)
+    function handleLogout() {
+        dispatch({type: LOGOUT})
     }
 
-    function cancelEditMemo(){
-        setMemoToEdit(undefined)
+    function editMemo(memo) {
+        dispatch({type: EDIT_MEMO, memo})
     }
 
-    function applyEditMemo(memo){
-        const newMemos = memos.map( existing =>
-            existing.id === memo.id ? memo : existing)
-        setMemos(newMemos)
-        setMemoToEdit(undefined)
+    function cancelEditMemo() {
+        dispatch({type: CANCEL_MEMO})
+    }
+
+    function applyEditMemo(memo) {
+        dispatch({type: APPLY_EDIT_MEMO})
     }
 
     if (isLoggedIn) {
         if (memoToEdit)
             return <div>
                 <EditMemo memo={memoToEdit} onCancel={cancelEditMemo}
-                                  onApply={applyEditMemo}/>
-        </div>
+                          onApply={applyEditMemo}/>
+            </div>
         else
             return <_Memos memos={memos} onDelete={deleteMemo} onEdit={editMemo}/>
-    }
-    else
+    } else
         return <Row>
             {/*<Col style={{display: "flex", justifyContent: "center"}}>*/}
             <Col className={"d-flex justify-content-center"}>
                 <div className={"mt-3"}>
+
                     <_Login onLogin={handleLogin}/>
                 </div>
             </Col>

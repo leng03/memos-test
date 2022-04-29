@@ -8,7 +8,7 @@ it('should initialed with isLoggedIn false', function () {
 it('should set isLoggedIn to false when the LOGIN action is performed and username incorrect', function () {
     const state = reducer(undefined, {
         type: LOGIN, credentials:{
-            userName: "lengdf",
+            username: "lengdf",
             password: "pass"
         }})
     expect(state?.isLoggedIn).toBe(false)
@@ -17,7 +17,7 @@ it('should set isLoggedIn to false when the LOGIN action is performed and userna
 it('should set isLoggedIn to false when the LOGIN action is performed and password incorrect', function () {
     const state = reducer(undefined, {
         type: LOGIN, credentials:{
-            userName: "leng",
+            username: "leng",
             password: "passfdsf"
         }})
     expect(state?.isLoggedIn).toBe(false)
@@ -26,7 +26,7 @@ it('should set isLoggedIn to false when the LOGIN action is performed and passwo
 it('should set isLoggedIn to true when the LOGIN action is performed and credentials are correct', function () {
     const state = reducer(undefined, {
         type: LOGIN, credentials:{
-            userName: "leng",
+            username: "leng",
             password: "pass"
         }})
     expect(state?.isLoggedIn).toBe(true)
