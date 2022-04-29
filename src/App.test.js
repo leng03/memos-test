@@ -11,7 +11,7 @@ import {App} from './App';
 
 // Is this a unit test? no, it is a units test
 
-test('should display the main app when logged in', () => {
+test('should display the _Memos when logged in', () => {
     let _memos = undefined
     let _onDelete = undefined
     const expectedText = "This is the expected text"
@@ -24,9 +24,17 @@ test('should display the main app when logged in', () => {
     const noText = 'NONONO'
     const nonono = ()=> <div>{noText}</div>
 
-    render(<App loggedInInit={true} _Memos={mock} _Login={nonono}/>);
-    const h1 = screen.getByText(expectedText)
-    expect(h1).toBeInTheDocument()
+    const state={
+        isLoggedIn: true,
+        memos:{},
+    }
+
+    function  useSelector(selectorFn){
+        return selectorFn(state)
+    }
+
+    render(<App _Memos={mock} _Login={nonono} _useDispatch={()=>{}} _useSelector={useSelector}/>);
+    expect(screen.getByText(expectedText)).toBeInTheDocument()
     expect(typeof _memos).toBe("object")
     expect(screen.queryByText(noText)).not.toBeInTheDocument()
     expect(typeof _onDelete).toBe("function")
@@ -35,17 +43,40 @@ test('should display the main app when logged in', () => {
 // This is a unit test now
 test('should display the login screen when logged out', () => {
     const mockLogin = () => <>This is the expected text</>
-    render(<App _Login={mockLogin}/>);
-    const element = screen.getByText(/This is the expected text/);
-    expect(element).toBeInTheDocument();
+
+    const expectedText = "This is the expected text"
+
+    const noText = 'NONONO'
+    const nonono = ()=> <div>{noText}</div>
+    const state={
+        isLoggedIn: false,
+        memos:{},
+    }
+
+    function  useSelector(selectorFn){
+        return selectorFn(state)
+    }
+
+    render(<App _Login={mockLogin} _Memos={nonono} _useDispatch={()=>{}} _useSelector={useSelector}/>);
+    expect(screen.getByText(expectedText)).toBeInTheDocument();
+    expect(screen.queryByText(noText)).not.toBeInTheDocument()
 });
 
 it('should pass an onEdit function as a property to Memos', function () {
     let _onEdit = undefined
+
     const Memos = ({onEdit})=>{
         _onEdit = onEdit
     }
 
-    render(<App loggedInInit={true} _Memos={Memos}/>)
+    const state={
+        isLoggedIn: true
+    }
+
+    function useSelector(selectorFn){
+        return selectorFn(state)
+    }
+
+    render(<App loggedInInit={true} _Memos={Memos} _useSelector={useSelector} _useDispatch={()=>{}}/>)
     expect(typeof _onEdit).toBe("function")
 });

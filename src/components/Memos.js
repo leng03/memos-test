@@ -5,8 +5,9 @@ import {Col, Row} from "react-bootstrap";
 
 export default function Memos({memos, onDelete, onEdit, _Memo = Memo}) {
     return <>
+        {/* try this when cards are working again className={"flex-nowrap"}*/}
         {/*transform the memos array into a list of react components*/}
-        <Row>
+        <Row >
             {memos.map(
                 // (memo,index) => <Col key={index} className={"m-3"}>
                 (memo, index) =>

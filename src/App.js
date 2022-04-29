@@ -6,11 +6,12 @@ import EditMemo from "./components/EditMemo";
 import {useDispatch, useSelector} from "react-redux";
 import {APPLY_EDIT_MEMO, CANCEL_MEMO, DELETE_MEMO, EDIT_MEMO, LOGIN, LOGOUT} from "./modules/memos";
 
-export function App({loggedInInit = false, _Login = Login, _Memos = Memos}) {
-    const dispatch = useDispatch()
-    const isLoggedIn = useSelector(state => state.isLoggedIn)
-    const memos = useSelector(state => state.memos)
-    const memoToEdit = useSelector(state => state.memoToEdit)
+export function App({_Login = Login, _Memos = Memos,_useDispatch = useDispatch,
+                        _useSelector = useSelector}) {
+    const dispatch = _useDispatch()
+    const isLoggedIn = _useSelector(state => state.isLoggedIn)
+    const memos = _useSelector(state => state.memos)
+    const memoToEdit = _useSelector(state => state.memoToEdit)
 
     function deleteMemo(memoID) {
         dispatch({type: DELETE_MEMO, id: memoID})
