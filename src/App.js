@@ -5,6 +5,8 @@ import Memos from "./components/Memos";
 import {Col, Row} from "react-bootstrap";
 import EditMemo from "./components/EditMemo";
 
+// dux pattern
+
 // All 'Functional React Components' are render functions
 // This function is called every time we want to render our
 //    application
